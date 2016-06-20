@@ -5,6 +5,12 @@
    # #1
    let(:book) { AddressBook.new }
    
+   def check_entry(entry, expected_name, expected_number, expected_email)
+     expect(entry.name).to eq expected_name
+     expect(entry.phone_number).to eq expected_number
+     expect(entry.email).to eq expected_email
+   end  
+   
    # #2
    describe "attributes" do
      it "responds to entries" do
@@ -37,11 +43,7 @@
  
    # Test that AddressBook's .import_from_csv() method is working as expected
    
-   def check_entry(entry, expected_name, expected_number, expected_email)
-     expect(entry.name).to eq expected_name
-     expect(entry.phone_number).to eq expected_number
-     expect(entry.email).to eq expected_email
-   end   
+ 
    
    describe "#import_from_csv" do
      it "imports the correct number of entries" do
@@ -89,7 +91,36 @@
        entry_five = book.entries[4]
        check_entry(entry_five, "Sussie", "555-555-2036", "sussie@blocmail.com")
      end
-   end     
-     
+   end 
+   
+   #Specs for second csv file
+   context "import from entries2.csv" do
+    it "imports correct number of entries" do
+      book.import_from_csv("entries2.csv")
+      
+      expect(book.entries.size).to eq 3
+    end
+   
+     it "imports the 1st entry" do
+       book.import_from_csv("entries2.csv")
+       # Check the third entry
+       entry_three = book.entries[0]
+       check_entry(entry_three, "Bobby", "555-555-3660", "bobby@blocmail.com")
+     end
+  
+     it "imports the 2nd entry" do
+       book.import_from_csv("entries2.csv")
+       # Check the fourth entry
+       entry_four = book.entries[1]
+       check_entry(entry_four, "Jess", "555-555-4646", "jess@blocmail.com")
+     end
+  
+     it "imports the 3rd entry" do
+       book.import_from_csv("entries2.csv")
+       # Check the fifth entry
+       entry_five = book.entries[2]
+       check_entry(entry_five, "Tony", "555-555-2036", "tony@blocmail.com")
+     end
+    end
 end   
 
